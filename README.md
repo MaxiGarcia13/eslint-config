@@ -35,6 +35,18 @@ export default eslintConfig({
 });
 ```
 
+### Tailwind CSS option
+
+Enable Tailwind CSS linting by setting `tailwindcss: true`:
+
+```js
+import { eslintConfig } from '@maxigarcia/eslint-config';
+
+export default eslintConfig({
+  tailwindcss: true,
+});
+```
+
 ## What this wrapper adds by default
 
 - `stylistic.indent: 2`
