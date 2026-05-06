@@ -1,0 +1,13 @@
+name: Bump version on main
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  bump:
+    uses: MaxiGarcia13/gh-actions/.github/workflows/bump-version.yml@main
