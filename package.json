@@ -41,7 +41,7 @@
     "build": "tsc",
     "prelint": "npm run build",
     "lint": "eslint --fix .",
-    "publish": "npm run build && npm publish --access public"
+    "publish:npm": "npm run build && npm publish --access public"
   },
   "dependencies": {
     "@antfu/eslint-config": "^8.2.0",
