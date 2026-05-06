@@ -46,9 +46,11 @@
   "dependencies": {
     "@antfu/eslint-config": "^8.2.0",
     "eslint": "^10.3.0",
-    "eslint-plugin-format": "^2.0.1"
+    "eslint-plugin-format": "^2.0.1",
+    "eslint-plugin-tailwindcss": "^3.18.3"
   },
   "devDependencies": {
+    "@types/eslint-plugin-tailwindcss": "^3.17.0",
     "typescript": "^6.0.3"
   }
 }

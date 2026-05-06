@@ -1,9 +1,16 @@
-import antfu from '@antfu/eslint-config';
+import antfu from '@antfu/eslint-config'; 
+import tailwind from "eslint-plugin-tailwindcss";
 
-type ESLintConfigOptions = Parameters<typeof antfu>[0];
+type ESLintConfigOptions = Parameters<typeof antfu>[0] & { tailwindcss?: boolean };
 type RestParams = Parameters<typeof antfu> extends [any?, ...infer T] ? T : never;
 
 export function eslintConfig(options: ESLintConfigOptions = {}, ...restParams: RestParams) {
+  const extendsList = [];
+
+  if (options?.tailwindcss) {
+    extendsList.push(tailwind.configs["flat/recommended"]);
+  }
+
   return antfu({
     ...options,
 
@@ -13,6 +20,8 @@ export function eslintConfig(options: ESLintConfigOptions = {}, ...restParams: R
       quotes: 'single',
       ...((options?.stylistic ?? {}) as object),
     },
+
+    extends:extendsList,
 
     rules: {
       'style/brace-style': ['error', '1tbs'],
