@@ -32,12 +32,17 @@
     "dist",
     "package.json"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "clean": "rm -rf dist",
     "prebuild": "npm run clean",
     "build": "tsc",
     "prelint": "npm run build",
-    "lint": "eslint --fix ."
+    "lint": "eslint --fix .",
+    "prepublish": "npm run build",
+    "publish": "npm publish --access public"
   },
   "dependencies": {
     "@antfu/eslint-config": "^8.2.0",
