@@ -1,7 +1,8 @@
-import { eslintConfig } from './dist/src/index.js';
+import { eslintConfig } from './dist/index.js';
 
 export default eslintConfig(
   {
+    typescript: true,
     rules: {
       'antfu/no-import-dist': 'off',
     },
