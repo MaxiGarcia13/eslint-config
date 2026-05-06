@@ -1,29 +1,50 @@
 {
   "name": "@maxigarcia/eslint-config",
+  "type": "module",
   "version": "0.0.0",
   "description": "Wrapper of Anthony's ESLint config preset",
+  "author": "Maximiliano Garcia Mortigliengo",
+  "license": "ISC",
+  "homepage": "https://github.com/MaxiGarcia13/eslint-config#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MaxiGarcia13/eslint-config.git"
+  },
+  "bugs": {
+    "url": "https://github.com/MaxiGarcia13/eslint-config/issues"
+  },
   "keywords": [
     "eslint",
     "eslint-config",
     "antfu"
   ],
-  "homepage": "https://github.com/MaxiGarcia13/eslint-config#readme",
-  "bugs": {
-    "url": "https://github.com/MaxiGarcia13/eslint-config/issues"
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/MaxiGarcia13/eslint-config.git"
-  },
-  "license": "ISC",
-  "author": "Maximiliano Garcia Mortigliengo",
-  "type": "commonjs",
-  "main": "index.js",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "package.json"
+  ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "clean": "rm -rf dist",
+    "prebuild": "npm run clean",
+    "build": "tsc",
+    "prelint": "npm run build",
+    "lint": "eslint --fix ."
   },
   "dependencies": {
     "@antfu/eslint-config": "^8.2.0",
-    "eslint": "^10.3.0"
+    "eslint": "^10.3.0",
+    "eslint-plugin-format": "^2.0.1"
+  },
+  "devDependencies": {
+    "typescript": "^6.0.3"
   }
 }
