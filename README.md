@@ -15,9 +15,9 @@ npm install -D @maxigarcia/eslint-config
 Create an `eslint.config.js` (or `eslint.config.mjs`) file:
 
 ```js
-import { eslintConfig } from '@maxigarcia/eslint-config'
+import { eslintConfig } from '@maxigarcia/eslint-config';
 
-export default eslintConfig()
+export default eslintConfig();
 ```
 
 ## Customization
@@ -25,14 +25,14 @@ export default eslintConfig()
 You can pass the same options supported by `@antfu/eslint-config`:
 
 ```js
-import { eslintConfig } from '@maxigarcia/eslint-config'
+import { eslintConfig } from '@maxigarcia/eslint-config';
 
 export default eslintConfig({
   typescript: true,
   stylistic: {
     semi: false,
   },
-})
+});
 ```
 
 ## What this wrapper adds by default
