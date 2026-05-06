@@ -1,0 +1,27 @@
+name: Bump version on main
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  bump:
+    uses: MaxiGarcia13/gh-actions/.github/workflows/bump-version.yml@main
+
+  publish:
+    needs: bump
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: create npmrc file
+        run: |
+          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
+
+      - name: Publish package
+        run: npm run publish
