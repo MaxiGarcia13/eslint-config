@@ -1,6 +1,6 @@
 # @maxigarcia/eslint-config
 
-Opinionated ESLint config for JavaScript and TypeScript projects.
+ESLint config for JavaScript and TypeScript projects.
 
 This package is a wrapper around [`@antfu/eslint-config`](https://github.com/antfu/eslint-config) with a small set of default style overrides.
 
