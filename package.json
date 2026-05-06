@@ -40,7 +40,8 @@
     "prebuild": "npm run clean",
     "build": "tsc",
     "prelint": "npm run build",
-    "lint": "eslint --fix .",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
     "publish:npm": "npm run build && npm publish --access public"
   },
   "dependencies": {
