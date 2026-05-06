@@ -1,0 +1,29 @@
+{
+  "name": "@maxigarcia/eslint-config",
+  "version": "0.0.0",
+  "description": "Wrapper of Anthony's ESLint config preset",
+  "keywords": [
+    "eslint",
+    "eslint-config",
+    "antfu"
+  ],
+  "homepage": "https://github.com/MaxiGarcia13/eslint-config#readme",
+  "bugs": {
+    "url": "https://github.com/MaxiGarcia13/eslint-config/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MaxiGarcia13/eslint-config.git"
+  },
+  "license": "ISC",
+  "author": "Maximiliano Garcia Mortigliengo",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@antfu/eslint-config": "^8.2.0",
+    "eslint": "^10.3.0"
+  }
+}
