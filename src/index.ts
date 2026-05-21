@@ -37,6 +37,7 @@ export function eslintConfig(options: ESLintConfigOptions = {}, ...restParams: R
     formatters: {
       html: true,
       markdown: 'prettier',
+      css: true,
       ...((options?.formatters ?? {}) as object),
     },
   }, ...(options.tailwindcss ? tailwind.configs['flat/recommended'] : []), ...restParams);
