@@ -68,7 +68,7 @@ export default eslintConfig({
 
 ### Astro
 
-When `astro: true`, this wrapper also enables Astro formatting (`prettier-plugin-astro`) and sets `htmlWhitespaceSensitivity: 'ignore'` so hugged inline tags are expanded.
+When `astro: true`, this wrapper also enables Astro formatting (`prettier-plugin-astro`) with the same stylistic defaults as JS/TS (`quotes: 'single'`, `semi: true`, `indent: 2`) and sets `htmlWhitespaceSensitivity: 'ignore'` so hugged inline tags are expanded. Template attributes use single quotes via `jsxSingleQuote`.
 
 ```js
 import { eslintConfig } from '@maxigarcia/eslint-config';

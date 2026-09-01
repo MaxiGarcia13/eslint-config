@@ -28,11 +28,11 @@ const expandedAnchor = [
   '',
   '<a',
   '  href={href}',
-  '  class="font-medium text-white underline decoration-2 underline-offset-4 hover:opacity-80"',
-  '  data-analytics="hero-primary-cta-mixamo"',
-  '  data-source="homepage-hero-banner"',
-  '  rel="noopener noreferrer"',
-  '  target="_blank"',
+  '  class=\'font-medium text-white underline decoration-2 underline-offset-4 hover:opacity-80\'',
+  '  data-analytics=\'hero-primary-cta-mixamo\'',
+  '  data-source=\'homepage-hero-banner\'',
+  '  rel=\'noopener noreferrer\'',
+  '  target=\'_blank\'',
   '>',
   '  mixamo.com',
   '</a>',
@@ -66,7 +66,7 @@ describe('formatters', () => {
       });
     });
 
-    it('enables astro formatting and ignores HTML whitespace when astro is on', () => {
+    it('enables astro formatting with stylistic prettier options', () => {
       expect(getFormatters({ astro: true })).toEqual({
         html: true,
         markdown: 'prettier',
@@ -74,6 +74,29 @@ describe('formatters', () => {
         astro: true,
         prettierOptions: {
           htmlWhitespaceSensitivity: 'ignore',
+          jsxSingleQuote: true,
+          semi: true,
+          singleQuote: true,
+          tabWidth: 2,
+          useTabs: false,
+        },
+      });
+    });
+
+    it('maps stylistic quotes, semi, and indent onto astro prettier options', () => {
+      expect(getFormatters({
+        astro: true,
+        stylistic: {
+          indent: 'tab',
+          quotes: 'double',
+          semi: false,
+        },
+      })).toMatchObject({
+        prettierOptions: {
+          jsxSingleQuote: false,
+          semi: false,
+          singleQuote: false,
+          useTabs: true,
         },
       });
     });
@@ -97,7 +120,7 @@ describe('formatters', () => {
       expect(config.some((item) => item.name === 'antfu/formatter/astro')).toBe(false);
     });
 
-    it('registers prettier-plugin-astro with htmlWhitespaceSensitivity ignore', async () => {
+    it('registers prettier-plugin-astro with single quotes and htmlWhitespaceSensitivity ignore', async () => {
       const config = configs(await eslintConfig({
         typescript: false,
         formatters: getFormatters({ astro: true }),
@@ -109,12 +132,16 @@ describe('formatters', () => {
         expect.objectContaining({
           parser: 'astro',
           htmlWhitespaceSensitivity: 'ignore',
+          jsxSingleQuote: true,
+          semi: true,
+          singleQuote: true,
+          tabWidth: 2,
           plugins: expect.arrayContaining(['prettier-plugin-astro']),
         }),
       ]));
     });
 
-    it('expands hugged inline tags in .astro files', async () => {
+    it('expands hugged inline tags and uses single quotes in .astro files', async () => {
       const eslint = await createLinter({
         formatters: getFormatters({ astro: true }),
       });
