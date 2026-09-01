@@ -1,8 +1,6 @@
+import type { ESLintConfigOptions, RestParams } from './types';
 import antfu from '@antfu/eslint-config';
-import tailwind from 'eslint-plugin-tailwindcss';
-
-type ESLintConfigOptions = Parameters<typeof antfu>[0] & { tailwindcss?: boolean };
-type RestParams = Parameters<typeof antfu> extends [any?, ...infer T] ? T : never;
+import { tailwindConfig } from './tailwind';
 
 export function eslintConfig(options: ESLintConfigOptions = {}, ...restParams: RestParams) {
   return antfu(
@@ -42,13 +40,7 @@ export function eslintConfig(options: ESLintConfigOptions = {}, ...restParams: R
         ...((options?.formatters ?? {}) as object),
       },
     },
-    ...(
-      options.tailwindcss
-        ? Array.isArray(tailwind.configs.recommended)
-          ? tailwind.configs.recommended
-          : [tailwind.configs.recommended]
-        : []
-    ).flat() as RestParams,
+    ...(options.tailwindcss ? tailwindConfig() as unknown as RestParams : []),
     ...restParams,
   );
 }
