@@ -42,16 +42,17 @@
     "prelint": "npm run build",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
-    "publish:npm": "npm run build && npm publish --access public"
+    "publish:npm": "npm run build && npm publish --access public",
+    "phoenix": "rm -rf dist && rm -rf node_modules && rm -rf package-lock.json && npm install"
   },
   "dependencies": {
-    "@antfu/eslint-config": "^8.2.0",
-    "eslint": "^10.3.0",
+    "@antfu/eslint-config": "^9.3.0",
+    "eslint": "^10.9.1",
     "eslint-plugin-format": "^2.0.1",
-    "eslint-plugin-tailwindcss": "^3.18.3"
+    "eslint-plugin-tailwindcss": "^4.4.0"
   },
   "devDependencies": {
     "@types/eslint-plugin-tailwindcss": "^3.17.0",
-    "typescript": "^6.0.3"
+    "typescript": "^7.0.2"
   }
 }
