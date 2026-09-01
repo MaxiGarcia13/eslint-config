@@ -1,7 +1,7 @@
 {
   "name": "@maxigarcia/eslint-config",
   "type": "module",
-  "version": "1.14.0",
+  "version": "1.14.1",
   "description": "Wrapper of Anthony's ESLint config preset",
   "author": "Maximiliano Garcia Mortigliengo",
   "license": "ISC",
