@@ -42,13 +42,13 @@ export function eslintConfig(options: ESLintConfigOptions = {}, ...restParams: R
         ...((options?.formatters ?? {}) as object),
       },
     },
-    ...(options.tailwindcss
-      ? [
-          ...(Array.isArray(tailwind.configs.recommended)
-            ? tailwind.configs.recommended
-            : [tailwind.configs.recommended]),
-        ].flat() as RestParams
-      : []),
+    ...(
+      options.tailwindcss
+        ? Array.isArray(tailwind.configs.recommended)
+          ? tailwind.configs.recommended
+          : [tailwind.configs.recommended]
+        : []
+    ).flat() as RestParams,
     ...restParams,
   );
 }
