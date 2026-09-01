@@ -28,11 +28,11 @@ const expandedAnchor = [
   '',
   '<a',
   '  href={href}',
-  '  class=\'font-medium text-white underline decoration-2 underline-offset-4 hover:opacity-80\'',
-  '  data-analytics=\'hero-primary-cta-mixamo\'',
-  '  data-source=\'homepage-hero-banner\'',
-  '  rel=\'noopener noreferrer\'',
-  '  target=\'_blank\'',
+  '  class="font-medium text-white underline decoration-2 underline-offset-4 hover:opacity-80"',
+  '  data-analytics="hero-primary-cta-mixamo"',
+  '  data-source="homepage-hero-banner"',
+  '  rel="noopener noreferrer"',
+  '  target="_blank"',
   '>',
   '  mixamo.com',
   '</a>',
@@ -74,7 +74,7 @@ describe('formatters', () => {
         astro: true,
         prettierOptions: {
           htmlWhitespaceSensitivity: 'ignore',
-          jsxSingleQuote: true,
+          jsxSingleQuote: false,
           semi: true,
           singleQuote: true,
           tabWidth: 2,
@@ -120,7 +120,7 @@ describe('formatters', () => {
       expect(config.some((item) => item.name === 'antfu/formatter/astro')).toBe(false);
     });
 
-    it('registers prettier-plugin-astro with single quotes and htmlWhitespaceSensitivity ignore', async () => {
+    it('registers prettier-plugin-astro with JS single quotes and HTML double quotes', async () => {
       const config = configs(await eslintConfig({
         typescript: false,
         formatters: getFormatters({ astro: true }),
@@ -132,7 +132,7 @@ describe('formatters', () => {
         expect.objectContaining({
           parser: 'astro',
           htmlWhitespaceSensitivity: 'ignore',
-          jsxSingleQuote: true,
+          jsxSingleQuote: false,
           semi: true,
           singleQuote: true,
           tabWidth: 2,
@@ -141,13 +141,25 @@ describe('formatters', () => {
       ]));
     });
 
-    it('expands hugged inline tags and uses single quotes in .astro files', async () => {
+    it('uses single quotes in JS and double quotes on html attributes in .astro files', async () => {
       const eslint = await createLinter({
         formatters: getFormatters({ astro: true }),
       });
       const [result] = await eslint.lintText(huggedAnchor, { filePath: 'file.astro' });
 
       expect(result.output).toBe(expandedAnchor);
+    });
+  });
+
+  describe('html', () => {
+    it('keeps double quotes on html attributes', async () => {
+      const eslint = await createLinter();
+      const [result] = await eslint.lintText(
+        '<a class=\'font-medium\' href=\'https://example.com\'></a>\n',
+        { filePath: 'file.html' },
+      );
+
+      expect(result.output).toBe('<a class="font-medium" href="https://example.com"></a>\n');
     });
   });
 });

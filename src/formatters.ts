@@ -27,7 +27,7 @@ export function getFormatters(options: ESLintConfigOptions): ESLintConfigOptions
     ...(options.astro
       ? {
           htmlWhitespaceSensitivity: 'ignore' as const,
-          jsxSingleQuote: quotes === 'single',
+          jsxSingleQuote: false,
           semi: typeof semi === 'boolean' ? semi : true,
           singleQuote: quotes === 'single',
           tabWidth: typeof indent === 'number' ? indent : 2,

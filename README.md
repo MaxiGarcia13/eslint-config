@@ -68,7 +68,9 @@ export default eslintConfig({
 
 ### Astro
 
-When `astro: true`, this wrapper also enables Astro formatting (`prettier-plugin-astro`) with the same stylistic defaults as JS/TS (`quotes: 'single'`, `semi: true`, `indent: 2`) and sets `htmlWhitespaceSensitivity: 'ignore'` so hugged inline tags are expanded. Template attributes use single quotes via `jsxSingleQuote`.
+When `astro: true`, this wrapper also enables Astro formatting (`prettier-plugin-astro`) with the same stylistic defaults as JS/TS (`quotes: 'single'`, `semi: true`, `indent: 2`) and sets `htmlWhitespaceSensitivity: 'ignore'` so hugged inline tags are expanded.
+
+JS strings and imports use single quotes. HTML and Astro template attributes use double quotes (`jsxSingleQuote: false`).
 
 ```js
 import { eslintConfig } from '@maxigarcia/eslint-config';
@@ -112,5 +114,7 @@ These rules are turned off so you can manage hooks and effects yourself:
 - HTML
 - Markdown (`prettier`)
 - CSS
+
+HTML and Astro attributes use double quotes. JS strings and imports use single quotes.
 
 Astro formatting is added only when `astro: true`. Override with `options.formatters`.
