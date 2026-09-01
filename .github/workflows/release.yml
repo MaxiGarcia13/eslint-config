@@ -16,6 +16,9 @@ jobs:
   bump:
     needs: test
     uses: MaxiGarcia13/gh-actions/.github/workflows/bump-version.yml@main
+    with:
+      paths: |
+        src/**
 
   publish:
     needs: bump
