@@ -2,7 +2,9 @@
 
 ESLint config for JavaScript and TypeScript projects.
 
-This package is a wrapper around [`@antfu/eslint-config`](https://github.com/antfu/eslint-config) with a small set of default style overrides.
+This package is a wrapper around [`@antfu/eslint-config`](https://github.com/antfu/eslint-config) with a small set of default style overrides. It targets [ESLint flat config](https://eslint.org/docs/latest/use/configure/configuration-files) (`eslint.config.js`).
+
+`eslintConfig(options, ...userConfigs)` forwards to antfu. Defaults below are overridable through `options`.
 
 ## Install
 
@@ -20,6 +22,23 @@ import { eslintConfig } from '@maxigarcia/eslint-config';
 export default eslintConfig();
 ```
 
+Extra config objects are passed through as additional antfu arguments:
+
+```js
+import { eslintConfig } from '@maxigarcia/eslint-config';
+
+export default eslintConfig(
+  {
+    typescript: true,
+  },
+  {
+    rules: {
+      'no-console': 'off',
+    },
+  },
+);
+```
+
 ## Customization
 
 You can pass the same options supported by `@antfu/eslint-config`:
@@ -35,15 +54,27 @@ export default eslintConfig({
 });
 ```
 
-### Tailwind CSS option
+### Tailwind CSS
 
-Enable Tailwind CSS linting by setting `tailwindcss: true`:
+Opt in with `tailwindcss: true`. Off by default.
 
 ```js
 import { eslintConfig } from '@maxigarcia/eslint-config';
 
 export default eslintConfig({
   tailwindcss: true,
+});
+```
+
+### Astro
+
+When `astro: true`, this wrapper also enables Astro formatting (`prettier-plugin-astro`) and sets `htmlWhitespaceSensitivity: 'ignore'` so hugged inline tags are expanded.
+
+```js
+import { eslintConfig } from '@maxigarcia/eslint-config';
+
+export default eslintConfig({
+  astro: true,
 });
 ```
 
@@ -55,11 +86,19 @@ export default eslintConfig({
 - `stylistic.semi: true`
 - `stylistic.quotes: 'single'`
 
+Override with `options.stylistic`.
+
 ### Style rules
 
 - `style/brace-style: ['error', '1tbs']`
 - `style/arrow-parens: ['error', 'always']`
 - `style/no-multiple-empty-lines` with `max: 1`, `maxBOF: 0`, `maxEOF: 0`
+
+### Imports
+
+`no-restricted-imports` blocks `../../` and deeper. Use the `@/` alias instead. One-level parent (`../`), sibling (`./`), and alias imports are allowed.
+
+Override with `options.rules`.
 
 ### React
 
@@ -73,3 +112,5 @@ These rules are turned off so you can manage hooks and effects yourself:
 - HTML
 - Markdown (`prettier`)
 - CSS
+
+Astro formatting is added only when `astro: true`. Override with `options.formatters`.

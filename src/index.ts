@@ -1,6 +1,6 @@
 import type { ESLintConfigOptions, RestParams } from './types.js';
 import antfu from '@antfu/eslint-config';
-import { CUSTOM_RULES, getCustomRules } from './custom-rules.js';
+import { getCustomRules } from './custom-rules.js';
 import { getFormatters } from './formatters.js';
 import { tailwindConfig } from './tailwind.js';
 

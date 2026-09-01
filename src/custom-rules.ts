@@ -1,6 +1,6 @@
 import type { ESLintConfigOptions } from './types.js';
 
-export const CUSTOM_RULES: ESLintConfigOptions['rules'] = {
+const CUSTOM_RULES: ESLintConfigOptions['rules'] = {
   // Devs should know what they are doing
   'react/exhaustive-deps': 'off',
   'react/set-state-in-effect': 'off',
