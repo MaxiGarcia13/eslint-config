@@ -1,6 +1,6 @@
-import type { ESLintConfigOptions, RestParams } from './types';
+import type { ESLintConfigOptions, RestParams } from './types.js';
 import antfu from '@antfu/eslint-config';
-import { tailwindConfig } from './tailwind';
+import { tailwindConfig } from './tailwind.js';
 
 export function eslintConfig(options: ESLintConfigOptions = {}, ...restParams: RestParams) {
   return antfu(
@@ -30,6 +30,18 @@ export function eslintConfig(options: ESLintConfigOptions = {}, ...restParams: R
             maxEOF: 0,
           },
         ],
+
+        // Prevent deep parent-relative imports
+        'no-restricted-imports': [
+          'error',
+          {
+            patterns: [{
+              group: ['../../**'],
+              message: 'Avoid deep parent-relative imports (../../ and deeper). Use the @/ alias instead.',
+            }],
+          },
+        ],
+
         ...(options?.rules ?? {}),
       },
 
