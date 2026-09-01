@@ -21,6 +21,7 @@ jobs:
         src/**
 
   publish:
+    if: ${{ needs.bump.outputs.tag != '' }}
     needs: bump
     uses: MaxiGarcia13/gh-actions/.github/workflows/npm-publish.yml@main
     secrets: inherit
