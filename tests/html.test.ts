@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { asConfigs, lintFixed } from './helpers.js';
 import { eslintConfig } from '../src/index.js';
+import { asConfigs, lintFixed } from './helpers.js';
 
 describe('html formatter', () => {
   it('registers the html formatter by default', async () => {

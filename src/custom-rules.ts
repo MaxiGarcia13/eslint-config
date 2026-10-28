@@ -21,10 +21,12 @@ const CUSTOM_RULES: ESLintConfigOptions['rules'] = {
   'no-restricted-imports': [
     'error',
     {
-      patterns: [{
-        group: ['../../**'],
-        message: 'Avoid deep parent-relative imports (../../ and deeper). Use the @/ alias instead.',
-      }],
+      patterns: [
+        {
+          group: ['../../**'],
+          message: 'Avoid deep parent-relative imports (../../ and deeper). Use the @/ alias instead.',
+        },
+      ],
     },
   ],
 };

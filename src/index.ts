@@ -20,7 +20,9 @@ export function eslintConfig(options: ESLintConfigOptions = {}, ...restParams: R
 
       formatters: getFormatters(options),
     },
-    ...(options.tailwindcss ? toArray(tailwindConfig()) as unknown as RestParams : []),
+    ...(options.tailwindcss
+      ? toArray(tailwindConfig()) as unknown as RestParams
+      : []),
     ...restParams,
   );
 }
