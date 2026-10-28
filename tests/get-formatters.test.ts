@@ -10,17 +10,24 @@ describe('getFormatters', () => {
     });
   });
 
-  it('does not add prettierOptions unless astro is enabled', () => {
-    expect(getFormatters({})).not.toHaveProperty('prettierOptions');
+  it('does not enable astro formatting from astro: true alone', () => {
+    expect(getFormatters({ astro: true })).toEqual({
+      html: true,
+      markdown: 'prettier',
+      css: true,
+    });
   });
 
-  it('enables astro formatting with stylistic prettier options', () => {
-    expect(getFormatters({ astro: true })).toEqual({
+  it('enables astro formatting when formatters.astro is set', () => {
+    expect(getFormatters({
+      formatters: { astro: true },
+    })).toEqual({
       html: true,
       markdown: 'prettier',
       css: true,
       astro: true,
       prettierOptions: {
+        astroSkipFrontmatter: true,
         htmlWhitespaceSensitivity: 'ignore',
         jsxSingleQuote: false,
         semi: true,
@@ -33,12 +40,12 @@ describe('getFormatters', () => {
 
   it('maps stylistic quotes, semi, and indent onto astro prettier options', () => {
     expect(getFormatters({
-      astro: true,
       stylistic: {
         indent: 'tab',
         quotes: 'double',
         semi: false,
       },
+      formatters: { astro: true },
     })).toMatchObject({
       prettierOptions: {
         jsxSingleQuote: false,
@@ -51,7 +58,6 @@ describe('getFormatters', () => {
 
   it('lets options.formatters override the astro defaults', () => {
     expect(getFormatters({
-      astro: true,
       formatters: {
         astro: false,
       },
@@ -62,8 +68,8 @@ describe('getFormatters', () => {
 
   it('merges user prettierOptions over the astro defaults', () => {
     expect(getFormatters({
-      astro: true,
       formatters: {
+        astro: true,
         prettierOptions: {
           printWidth: 100,
           singleQuote: false,
@@ -71,6 +77,7 @@ describe('getFormatters', () => {
       },
     })).toMatchObject({
       prettierOptions: {
+        astroSkipFrontmatter: true,
         htmlWhitespaceSensitivity: 'ignore',
         printWidth: 100,
         singleQuote: false,

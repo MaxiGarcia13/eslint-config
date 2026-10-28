@@ -68,15 +68,18 @@ export default eslintConfig({
 
 ### Astro
 
-When `astro: true`, this wrapper also enables Astro formatting (`prettier-plugin-astro`) with the same stylistic defaults as JS/TS (`quotes: 'single'`, `semi: true`, `indent: 2`) and sets `htmlWhitespaceSensitivity: 'ignore'` so hugged inline tags are expanded.
+`astro: true` enables Astro linting. `antfu/reasonable-newline` stays on for frontmatter and `<script>`, so `eslint --fix` can break complex ternaries.
 
-JS strings and imports use single quotes. HTML and Astro template attributes use double quotes (`jsxSingleQuote: false`).
+Astro Prettier (`prettier-plugin-astro`) is opt-in via `formatters.astro`. It is not enabled by `astro: true` alone — Prettier reformats `<script>` JS and circular-fixes against `antfu/reasonable-newline` on short complex ternaries.
+
+When `formatters.astro` is on, stylistic defaults match JS/TS (`quotes: 'single'`, `semi: true`, `indent: 2`), `htmlWhitespaceSensitivity: 'ignore'` expands hugged inline tags, `astroSkipFrontmatter: true` leaves frontmatter to ESLint, and template attributes use double quotes (`jsxSingleQuote: false`).
 
 ```js
 import { eslintConfig } from '@maxigarcia/eslint-config';
 
 export default eslintConfig({
   astro: true,
+  // formatters: { astro: true }, // optional template Prettier; can conflict in <script>
 });
 ```
 
@@ -117,4 +120,4 @@ These rules are turned off so you can manage hooks and effects yourself:
 
 HTML and Astro attributes use double quotes. JS strings and imports use single quotes.
 
-Astro formatting is added only when `astro: true`. Override with `options.formatters`.
+Astro Prettier is opt-in with `formatters: { astro: true }`. Override with `options.formatters`.
