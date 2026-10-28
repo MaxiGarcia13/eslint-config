@@ -47,18 +47,21 @@
     "phoenix": "npm run clean && rm -rf node_modules && rm -rf package-lock.json && npm install"
   },
   "dependencies": {
-    "@antfu/eslint-config": "^9.5.1",
-    "eslint": "^10.11.0",
+    "@antfu/eslint-config": "^10.0.0",
+    "eslint": "^10.13.0",
     "eslint-plugin-format": "^2.0.1",
-    "eslint-plugin-tailwindcss": "^3.18.3",
-    "prettier": "^3.9.9",
-    "prettier-plugin-astro": "^0.14.1"
+    "eslint-plugin-tailwindcss": "^4.4.0",
+    "prettier": "^3.9.10",
+    "prettier-plugin-astro": "^1.1.2"
   },
   "devDependencies": {
     "@types/eslint-plugin-tailwindcss": "^3.17.0",
-    "@types/node": "^26.6.3",
+    "@types/node": "^26.6.5",
     "tailwindcss": "^4.3.3",
     "typescript": "~5.9.3",
-    "vitest": "^4.1.11"
+    "vitest": "^5.0.5"
+  },
+  "overrides": {
+    "prettier-plugin-astro": "^1.1.2"
   }
 }

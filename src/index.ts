@@ -1,5 +1,5 @@
 import type { ESLintConfigOptions, RestParams } from './types.js';
-import antfu from '@antfu/eslint-config';
+import antfu, { toArray } from '@antfu/eslint-config';
 import { getCustomRules } from './custom-rules.js';
 import { getFormatters } from './formatters.js';
 import { tailwindConfig } from './tailwind.js';
@@ -20,7 +20,7 @@ export function eslintConfig(options: ESLintConfigOptions = {}, ...restParams: R
 
       formatters: getFormatters(options),
     },
-    ...(options.tailwindcss ? tailwindConfig() as unknown as RestParams : []),
+    ...(options.tailwindcss ? toArray(tailwindConfig()) as unknown as RestParams : []),
     ...restParams,
   );
 }

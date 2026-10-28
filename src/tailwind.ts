@@ -5,5 +5,5 @@ export function tailwindConfig() {
     return tailwind.configs['flat/recommended'];
   }
 
-  return {};
+  return tailwind.configs.recommended;
 }
