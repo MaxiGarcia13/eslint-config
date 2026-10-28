@@ -4,12 +4,22 @@ import { describe, expect, it } from 'vitest';
 import { eslintConfig } from '../src/index.js';
 
 const fixtureDir = fileURLToPath(new URL('./fixtures/tailwind', import.meta.url));
+const cssConfigPath = fileURLToPath(new URL('./fixtures/tailwind/style.css', import.meta.url));
 
 async function lint(code: string, options: { tailwindcss?: boolean } = {}) {
-  const config = await eslintConfig({
-    tailwindcss: options.tailwindcss,
-    typescript: false,
-  });
+  const config = await eslintConfig(
+    {
+      tailwindcss: options.tailwindcss,
+      typescript: false,
+    },
+    {
+      settings: {
+        tailwindcss: {
+          cssConfigPath,
+        },
+      },
+    },
+  );
 
   const eslint = new ESLint({
     cwd: fixtureDir,
