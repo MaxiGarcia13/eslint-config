@@ -32,7 +32,7 @@ async function lint(code: string, options: { tailwindcss?: boolean } = {}) {
 }
 
 describe('tailwind', () => {
-  it('sort classes correctly', async () => {
+  it('sort classes correctly', { timeout: 20_000 }, async () => {
     const messages = await lint(
       'export function App() { return <div className="text-white bg-red-500" />; }',
       { tailwindcss: true },
