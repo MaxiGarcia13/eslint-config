@@ -1,14 +1,14 @@
 import { describe, expect, it } from 'vitest';
-import { getFormatters } from '../src/formatters.js';
+import { getAstroFormatterDisables, getFormatters } from '../src/formatters.js';
 import { eslintConfig } from '../src/index.js';
-import { asConfigs, lintFixed } from './helpers.js';
+import { asConfigs, createLinter, lintFixed } from './helpers.js';
 
-/** Opt in to the Astro Prettier formatter without loading eslint-plugin-astro. */
+/** Enable the Astro Prettier formatter without loading eslint-plugin-astro. */
 function withAstroFormatter(stylistic?: Parameters<typeof getFormatters>[0]['stylistic']) {
   return {
     formatters: getFormatters({
+      astro: true,
       stylistic,
-      formatters: { astro: true },
     }),
   };
 }
@@ -25,7 +25,7 @@ const unformattedAstro = [
 
 const formattedAstro = [
   '---',
-  'const href = "https://example.com";',
+  'const href = \'https://example.com\';',
   '---',
   '',
   '<a href={href} class="link">',
@@ -39,19 +39,20 @@ describe('astro formatter', () => {
     const config = asConfigs(await eslintConfig({ typescript: false }));
 
     expect(config.some((item) => item.name === 'antfu/formatter/astro')).toBe(false);
+    expect(config.some((item) => item.name === 'maxigarcia/formatter/astro/disables')).toBe(false);
   });
 
-  it('does not register the astro formatter from astro: true alone', async () => {
+  it('disables antfu/reasonable-newline when the astro formatter is enabled', async () => {
     const config = asConfigs(await eslintConfig({
       typescript: false,
-      // Avoid loading eslint-plugin-astro; only assert formatter registration.
-      formatters: getFormatters({ astro: true }),
+      ...withAstroFormatter(),
     }));
+    const disables = config.find((item) => item.name === 'maxigarcia/formatter/astro/disables');
 
-    expect(config.some((item) => item.name === 'antfu/formatter/astro')).toBe(false);
+    expect(disables).toMatchObject(getAstroFormatterDisables());
   });
 
-  it('registers prettier-plugin-astro when formatters.astro is enabled', async () => {
+  it('registers prettier-plugin-astro when the astro formatter is enabled', async () => {
     const config = asConfigs(await eslintConfig({
       typescript: false,
       ...withAstroFormatter(),
@@ -62,7 +63,6 @@ describe('astro formatter', () => {
       'error',
       expect.objectContaining({
         parser: 'astro',
-        astroSkipFrontmatter: true,
         htmlWhitespaceSensitivity: 'ignore',
         jsxSingleQuote: false,
         semi: true,
@@ -73,28 +73,31 @@ describe('astro formatter', () => {
     ]));
   });
 
-  it('formats the template while leaving frontmatter verbatim', async () => {
+  it('formats JS with single quotes and HTML attributes with double quotes', async () => {
     await expect(lintFixed(unformattedAstro, 'file.astro', withAstroFormatter()))
       .resolves
       .toBe(formattedAstro);
   });
 
-  it('respects stylistic quote and semi overrides for template formatting options', async () => {
-    const config = asConfigs(await eslintConfig({
-      typescript: false,
-      ...withAstroFormatter({
-        quotes: 'double',
-        semi: false,
-      }),
-    }));
-    const astroFormatter = config.find((item) => item.name === 'antfu/formatter/astro');
+  it('respects stylistic quote and semi overrides when formatting', async () => {
+    const eslint = await createLinter(withAstroFormatter({
+      quotes: 'double',
+      semi: false,
+    }), true);
 
-    expect(astroFormatter?.rules?.['format/prettier']).toEqual(expect.arrayContaining([
-      'error',
-      expect.objectContaining({
-        semi: false,
-        singleQuote: false,
-      }),
-    ]));
+    const [result] = await eslint.lintText(
+      [
+        '---',
+        'const href = \'https://example.com\'',
+        '---',
+        '',
+        '<a href={href}>ok</a>',
+        '',
+      ].join('\n'),
+      { filePath: 'file.astro' },
+    );
+
+    expect(result.output).toContain('const href = "https://example.com"');
+    expect(result.output).not.toMatch(/";/);
   });
 });

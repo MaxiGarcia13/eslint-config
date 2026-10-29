@@ -1,7 +1,7 @@
 import type { ESLintConfigOptions, RestParams } from './types.js';
 import antfu, { toArray } from '@antfu/eslint-config';
 import { getCustomRules } from './custom-rules.js';
-import { getFormatters } from './formatters.js';
+import { getAstroFormatterDisables, getFormatters, isAstroFormatterEnabled } from './formatters.js';
 import { tailwindConfig } from './tailwind.js';
 
 export function eslintConfig(options: ESLintConfigOptions = {}, ...restParams: RestParams) {
@@ -20,9 +20,10 @@ export function eslintConfig(options: ESLintConfigOptions = {}, ...restParams: R
 
       formatters: getFormatters(options),
     },
-    ...(options.tailwindcss
-      ? toArray(tailwindConfig()) as unknown as RestParams
+    ...(isAstroFormatterEnabled(options)
+      ? [getAstroFormatterDisables()] as unknown as RestParams
       : []),
+    ...(options.tailwindcss ? toArray(tailwindConfig()) as unknown as RestParams : []),
     ...restParams,
   );
 }
