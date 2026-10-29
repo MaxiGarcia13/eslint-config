@@ -23,6 +23,11 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
       "require": "./dist/index.js"
+    },
+    "./prettier": {
+      "types": "./dist/prettier.d.ts",
+      "import": "./dist/prettier.js",
+      "require": "./dist/prettier.js"
     }
   },
   "main": "./dist/index.js",

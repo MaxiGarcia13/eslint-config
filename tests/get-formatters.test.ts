@@ -1,51 +1,24 @@
 import { describe, expect, it } from 'vitest';
 import { getFormatters, isAstroFormatterEnabled } from '../src/formatters.js';
+import { getPrettierExtras } from '../src/prettier-options.js';
 
 describe('getFormatters', () => {
-  it('keeps default html, markdown, and css formatters', () => {
+  it('keeps default html, markdown, and css formatters with prettier extras', () => {
     expect(getFormatters({})).toEqual({
       html: true,
       markdown: 'prettier',
       css: true,
+      prettierOptions: getPrettierExtras(),
     });
   });
 
-  it('does not add prettierOptions unless astro is enabled', () => {
-    expect(getFormatters({})).not.toHaveProperty('prettierOptions');
-  });
-
-  it('enables astro formatting with stylistic prettier options', () => {
+  it('enables astro formatting and keeps prettier extras for antfu to merge', () => {
     expect(getFormatters({ astro: true })).toEqual({
       html: true,
       markdown: 'prettier',
       css: true,
       astro: true,
-      prettierOptions: {
-        htmlWhitespaceSensitivity: 'ignore',
-        jsxSingleQuote: false,
-        semi: true,
-        singleQuote: true,
-        tabWidth: 2,
-        useTabs: false,
-      },
-    });
-  });
-
-  it('maps stylistic quotes, semi, and indent onto astro prettier options', () => {
-    expect(getFormatters({
-      astro: true,
-      stylistic: {
-        indent: 'tab',
-        quotes: 'double',
-        semi: false,
-      },
-    })).toMatchObject({
-      prettierOptions: {
-        jsxSingleQuote: false,
-        semi: false,
-        singleQuote: false,
-        useTabs: true,
-      },
+      prettierOptions: getPrettierExtras(),
     });
   });
 
@@ -60,9 +33,8 @@ describe('getFormatters', () => {
     });
   });
 
-  it('merges user prettierOptions over the astro defaults', () => {
+  it('merges user prettierOptions over our extras', () => {
     expect(getFormatters({
-      astro: true,
       formatters: {
         prettierOptions: {
           printWidth: 100,
@@ -72,6 +44,7 @@ describe('getFormatters', () => {
     })).toMatchObject({
       prettierOptions: {
         htmlWhitespaceSensitivity: 'ignore',
+        jsxSingleQuote: false,
         printWidth: 100,
         singleQuote: false,
       },

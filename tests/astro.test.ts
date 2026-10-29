@@ -4,12 +4,9 @@ import { eslintConfig } from '../src/index.js';
 import { asConfigs, createLinter, lintFixed } from './helpers.js';
 
 /** Enable the Astro Prettier formatter without loading eslint-plugin-astro. */
-function withAstroFormatter(stylistic?: Parameters<typeof getFormatters>[0]['stylistic']) {
+function withAstroFormatter() {
   return {
-    formatters: getFormatters({
-      astro: true,
-      stylistic,
-    }),
+    formatters: getFormatters({ astro: true }),
   };
 }
 
@@ -63,11 +60,14 @@ describe('astro formatter', () => {
       'error',
       expect.objectContaining({
         parser: 'astro',
+        endOfLine: 'auto',
         htmlWhitespaceSensitivity: 'ignore',
         jsxSingleQuote: false,
+        printWidth: 120,
         semi: true,
         singleQuote: true,
         tabWidth: 2,
+        trailingComma: 'all',
         plugins: expect.arrayContaining(['prettier-plugin-astro']),
       }),
     ]));
@@ -80,10 +80,13 @@ describe('astro formatter', () => {
   });
 
   it('respects stylistic quote and semi overrides when formatting', async () => {
-    const eslint = await createLinter(withAstroFormatter({
-      quotes: 'double',
-      semi: false,
-    }), true);
+    const eslint = await createLinter({
+      stylistic: {
+        quotes: 'double',
+        semi: false,
+      },
+      ...withAstroFormatter(),
+    }, true);
 
     const [result] = await eslint.lintText(
       [

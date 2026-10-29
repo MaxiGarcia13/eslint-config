@@ -4,4 +4,6 @@ This repo is `@maxigarcia/eslint-config`, a shareable ESLint **config** package 
 
 Keep the public API stable: `eslintConfig(options, ...restParams)` forwards to antfu. Defaults in `src/index.ts` (stylistic, style rules, React offs, formatters, `no-restricted-imports`) must remain overridable via `options`. Tailwind stays opt-in (`options.tailwindcss`).
 
+Also exports `prettierConfig()` from `@maxigarcia/eslint-config/prettier` for HTML/Markdown/CSS/Astro (same options as ESLint formatters). JS/TS stay under ESLint — do not document Prettier as the JS formatter.
+
 Build with `npm run build` before linting this repo (`eslint.config.mjs` imports `./dist/index.js`).

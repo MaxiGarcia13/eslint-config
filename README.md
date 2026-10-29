@@ -82,6 +82,42 @@ export default eslintConfig({
 });
 ```
 
+### Prettier (HTML / Markdown / CSS / Astro) — optional
+
+**Optional.** ESLint already runs Prettier for those formats via `eslint-plugin-format` (`eslint --fix`). You only need a project Prettier config if you also use the **editor Prettier extension**, Astro’s formatter, or a standalone `prettier` CLI — so those tools match this package:
+
+```js
+// prettier.config.js
+import { prettierConfig } from '@maxigarcia/eslint-config/prettier';
+
+export default prettierConfig();
+```
+
+Override stylistic defaults the same way as `eslintConfig`, or pass extra Prettier options:
+
+```js
+import { prettierConfig } from '@maxigarcia/eslint-config/prettier';
+
+export default prettierConfig({
+  stylistic: {
+    semi: false,
+    quotes: 'double',
+  },
+  printWidth: 100,
+});
+```
+
+Defaults: `semi: true`, `singleQuote: true`, `tabWidth: 2`, `printWidth: 120`, `jsxSingleQuote: false`, `htmlWhitespaceSensitivity: 'ignore'`, plus `prettier-plugin-astro` for `*.astro`.
+
+**Do not format JS/TS with Prettier.** Those stay under ESLint stylistic rules (and `antfu/reasonable-newline`). Running Prettier on `.js`/`.ts` fights ESLint. Ignore them:
+
+```gitignore
+# .prettierignore
+**/*.{js,cjs,mjs,jsx,ts,cts,mts,tsx}
+```
+
+Or in the editor, set the default formatter for JS/TS to ESLint, not Prettier.
+
 ## What this wrapper adds by default
 
 ### Stylistic
