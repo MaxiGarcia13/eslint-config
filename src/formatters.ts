@@ -8,7 +8,9 @@ const DEFAULT_FORMATTERS: ESLintConfigOptions['formatters'] = {
 };
 
 function getUserFormatters(options: ESLintConfigOptions) {
-  return typeof options.formatters === 'object' ? options.formatters : undefined;
+  return typeof options.formatters === 'object'
+    ? options.formatters
+    : undefined;
 }
 
 export function getFormatters(options: ESLintConfigOptions): ESLintConfigOptions['formatters'] {
@@ -20,7 +22,9 @@ export function getFormatters(options: ESLintConfigOptions): ESLintConfigOptions
 
   return {
     ...DEFAULT_FORMATTERS as object,
-    ...(options.astro ? { astro: true } : {}),
+    ...(options.astro
+      ? { astro: true }
+      : {}),
     ...userFormatters,
     prettierOptions,
   };

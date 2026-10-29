@@ -19,7 +19,9 @@ export function getPrettierOptions(stylistic: PrettierStylistic = {}) {
     printWidth: 120,
     semi,
     singleQuote: quotes === 'single',
-    tabWidth: typeof indent === 'number' ? indent : 2,
+    tabWidth: typeof indent === 'number'
+      ? indent
+      : 2,
     trailingComma: 'all' as const,
     useTabs: indent === 'tab',
     ...getPrettierExtras(),

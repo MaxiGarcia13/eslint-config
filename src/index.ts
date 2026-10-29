@@ -20,9 +20,13 @@ export function eslintConfig(options: ESLintConfigOptions = {}, ...restParams: R
       formatters: getFormatters(options),
     },
     ...(isAstroFormatterEnabled(options)
-      ? [getAstroFormatterDisables()] as unknown as RestParams
+      ? [
+          getAstroFormatterDisables(),
+        ] as unknown as RestParams
       : []),
-    ...(options.tailwindcss ? toArray(tailwindConfig()) as unknown as RestParams : []),
+    ...(options.tailwindcss
+      ? toArray(tailwindConfig()) as unknown as RestParams
+      : []),
     ...restParams,
   );
 }
