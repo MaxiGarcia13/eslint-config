@@ -8,4 +8,7 @@ export default eslintConfig(
       'antfu/no-import-dist': 'off',
     },
   },
+  {
+    ignores: ['tests/fixtures/rules/**'],
+  },
 );
